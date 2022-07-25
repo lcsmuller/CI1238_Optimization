@@ -1,11 +1,11 @@
 EXE = despacho
-AWK = $(EXE).awk
+SRC = $(EXE).awk
 
 all: $(EXE)
 
-$(EXE): $(AWK)
-	cp $< $@
-	chmod +x $@
+$(EXE): $(SRC)
+	@ cp $< $@ && chmod +x $@
+	@ echo "'$@' succesfully created!"
 
 clean:
 	@ rm -f $(EXE)
