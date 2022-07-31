@@ -42,36 +42,34 @@ FNR == 1 {
 
 # converte saída para o formato lp_solve
 ENDFILE {
-    # custoT = custo geração da termoelétrica
-    # custoA = custo ambiental associado à hidrelétrica
-    # v = variação
-    # r = reservatório
+    # t = custo geração da termoelétrica
+    # a = custo ambiental associado à hidrelétrica
+    # var(i .. n) = variação do custo ambiental mensal da hidrelétrica
+    # r(i .. n) = reservatório
 
     # função objetiva a ser minimizada
-    printf "min: %g custoT + %g custoA;\n\n", CT, CA
+    printf "min: %g t + %g a;\n\n", CT, CA
 
     # variáveis utilizadas na função objetiva
-    printf "custoT = "
+    printf "t = "
     for (i = 1; i < n; ++i)
         printf "custoT%d + ", i
-    printf("custoT%d;\n", n)
-    printf "custoA = "
+    printf "custoT%d;\n", n
+    printf "a = "
     for (i = 1; i < n; ++i)
-        printf "custoA%d + ", i
-    printf("custoA%d;\n", n)
-    # volume inicial do reservatório
+        printf "var%d + ", i
+    printf "var%d;\n", n
+    # volume do primeiro reservatório
     printf "r0 = %d;\n\n", V[0]
 
     # gera restrições
     for (i = 1; i <= n; ++i) {
         printf "custoT%d + %g total%d >= %d;\n", i, k, i, D[i - 1]
-        printf "custoA%d = v%d;\n", i, i
-        printf "v%d >= %d - total%d;\n", i, Y[i - 1], i
-        printf "v%d >= -%d + total%d;\n", i, Y[i - 1], i
-        printf "r%d = r%d + %d - total%d;\n", i, i - 1,
-               Y[i - 1], i
+        printf "var%d >= %d - total%d;\n", i, Y[i - 1], i
+        printf "var%d >= -%d + total%d;\n", i, Y[i - 1], i
+        printf "r%d = r%d + %d - total%d;\n", i, i - 1, Y[i - 1], i
         printf "%d <= r%d <= %d;\n", V[1], i, V[2]
-        printf "0 <= custoT%d <= %d;\n", i, V[2], tmax
-        printf "v%d >= 0;\n\n", i
+        printf "0 <= custoT%d <= %d;\n", i, tmax
+        printf "var%d >= 0;\n\n", i
     }
 }
