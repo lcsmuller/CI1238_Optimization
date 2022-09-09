@@ -1,0 +1,14 @@
+# Ignora tudo
+*
+# Exceto os seguinte arquivos
+!.gitignore
+!Makefile
+!src
+!README.pdf
+!*.c
+!src/*.c
+!include
+!include/*.h
+!test
+!test/*.in
+!test/*.out

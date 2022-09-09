@@ -1,0 +1,18 @@
+CC = gcc
+
+INCLUDE_DIR = include
+SRC_DIR     = src
+
+OBJS = $(SRC_DIR)/input.o $(SRC_DIR)/bb.o
+MAIN = elenco
+
+CFLAGS = -Wall -Wextra -Wpedantic -g -I$(INCLUDE_DIR)
+
+all: $(MAIN)
+
+$(MAIN): $(OBJS)
+
+clean:
+	@ rm -f $(MAIN) $(OBJS)
+
+.PHONY: all clean
