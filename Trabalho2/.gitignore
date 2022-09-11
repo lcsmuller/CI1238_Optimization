@@ -5,6 +5,7 @@
 !Makefile
 !src
 !README.pdf
+!relatorio.pdf
 !*.c
 !src/*.c
 !include
